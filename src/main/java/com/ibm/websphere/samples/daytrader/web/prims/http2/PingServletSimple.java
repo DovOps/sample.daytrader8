@@ -35,7 +35,7 @@ public class PingServletSimple extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-    try(PrintWriter respWriter = resp.getWriter();){
+    try(PrintWriter respWriter = resp.getWriter()){
       hitCount++;
       //System.out.println("Sending hit count: " + hitCount);
       respWriter.write("<html><head><title>Ping Servlet HTTP/2</title></head>"

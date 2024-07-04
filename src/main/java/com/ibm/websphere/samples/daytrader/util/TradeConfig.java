@@ -16,6 +16,7 @@
 package com.ibm.websphere.samples.daytrader.util;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -31,36 +32,36 @@ public class TradeConfig {
   /* Trade Runtime Configuration Parameters */
 
   /* Trade Runtime Mode parameters */
-  private static String[] runTimeModeNames = { "Full EJB3", "Direct (JDBC)", "Session to Direct"};
+  private static final String[] runTimeModeNames = {"Full EJB3", "Direct (JDBC)", "Session to Direct"};
   public static final int EJB3 = 0;
   public static final int DIRECT = 1;
   public static final int SESSION_TO_DIRECT = 2;
   private static int runTimeMode = EJB3;
 
-  private static String[] orderProcessingModeNames = { "Sync", "Async","Async_2-Phase" };
+  private static final String[] orderProcessingModeNames = {"Sync", "Async", "Async_2-Phase"};
   public static final int SYNCH = 0;
   public static final int ASYNCH = 1;
   public static final int ASYNCH_2PHASE = 2;
   private static int orderProcessingMode = SYNCH;
 
-  private static String[] accessModeNames = { "Standard", "WebServices" };
+  private static final String[] accessModeNames = {"Standard", "WebServices"};
   public static final int STANDARD = 0;
   private static int accessMode = STANDARD;
 
   /* Trade Web Interface parameters */
-  private static String[] webInterfaceNames = { "JSP", "JSP-Images", "JSP-Images-Http2" };
+  private static final String[] webInterfaceNames = {"JSP", "JSP-Images", "JSP-Images-Http2"};
   public static final int JSP = 0;
   public static final int JSP_Images = 1;
   public static final int JSP_Images_HTTP2 = 2;
   private static int webInterface = JSP;
 
   /* Trade Database Scaling parameters */
-  private static int MAX_USERS = 15000;
-  private static int MAX_QUOTES = 10000;
+  private static int maxUsers = 15000;
+  private static int maxQuotes = 10000;
 
   
   /* Trade XA Datasource specific parameters */
-  public static boolean JDBCDriverNeedsGlobalTransation = false;
+  public static boolean JDBCDriverNeedsGlobalTransation;
 
   /* Trade Config Miscellaneous itmes */
   public static String DATASOURCE = "java:comp/env/jdbc/TradeDataSource";
@@ -68,14 +69,14 @@ public class TradeConfig {
   public static int QUOTES_PER_PAGE = 10;
   public static boolean RND_USER = true;
   // public static int RND_SEED = 0;
-  private static int MAX_HOLDINGS = 10;
-  private static int count = 0;
-  private static Object userID_count_semaphore = new Object();
-  private static int userID_count = 0;
-  private static String hostName = null;
-  private static Random r0 = new Random(System.currentTimeMillis());
+  private static int maxHoldings = 10;
+  private static int count;
+  private static final Object userID_count_semaphore = new Object();
+  private static int userIDCount;
+  private static String hostName;
+  private static final Random r0 = new Random(System.currentTimeMillis());
   // private static Random r1 = new Random(RND_SEED);
-  private static Random randomNumberGenerator = r0;
+  private static final Random randomNumberGenerator = r0;
   public static final String newUserPrefix = "ru:";
   public static final int verifyPercent = 5;
   private static boolean updateQuotePrices = true;
@@ -101,10 +102,10 @@ public class TradeConfig {
   public static BigDecimal PENNY_STOCK_PRICE;
   public static BigDecimal PENNY_STOCK_RECOVERY_MIRACLE_MULTIPLIER;
   static {
-    PENNY_STOCK_PRICE = new BigDecimal(0.01);
-    PENNY_STOCK_PRICE = PENNY_STOCK_PRICE.setScale(2, BigDecimal.ROUND_HALF_UP);
-    PENNY_STOCK_RECOVERY_MIRACLE_MULTIPLIER = new BigDecimal(600.0);
-    PENNY_STOCK_RECOVERY_MIRACLE_MULTIPLIER.setScale(2, BigDecimal.ROUND_HALF_UP);
+    PENNY_STOCK_PRICE = BigDecimal.valueOf(0.01);
+    PENNY_STOCK_PRICE = PENNY_STOCK_PRICE.setScale(2, RoundingMode.HALF_UP);
+    PENNY_STOCK_RECOVERY_MIRACLE_MULTIPLIER = BigDecimal.valueOf(600.0);
+    PENNY_STOCK_RECOVERY_MIRACLE_MULTIPLIER.setScale(2, RoundingMode.HALF_UP);
   }
 
   /*
@@ -118,9 +119,9 @@ public class TradeConfig {
   public static BigDecimal MAXIMUM_STOCK_SPLIT_MULTIPLIER;
   static {
     MAXIMUM_STOCK_PRICE = new BigDecimal(400);
-    MAXIMUM_STOCK_PRICE.setScale(2, BigDecimal.ROUND_HALF_UP);
-    MAXIMUM_STOCK_SPLIT_MULTIPLIER = new BigDecimal(0.5);
-    MAXIMUM_STOCK_SPLIT_MULTIPLIER.setScale(2, BigDecimal.ROUND_HALF_UP);
+    MAXIMUM_STOCK_PRICE.setScale(2, RoundingMode.HALF_UP);
+    MAXIMUM_STOCK_SPLIT_MULTIPLIER = BigDecimal.valueOf(0.5);
+    MAXIMUM_STOCK_SPLIT_MULTIPLIER.setScale(2, RoundingMode.HALF_UP);
   }
 
   /*
@@ -142,13 +143,13 @@ public class TradeConfig {
   public static final int SELL_OP = 8;
   public static final int UPDATEACCOUNT_OP = 9;
 
-  private static int[][] scenarioMixes = {
+  private static final int[][] scenarioMixes = {
       // h q l o r a p b s u
-      { 20, 40, 0, 4, 2, 10, 12, 4, 4, 4 }, // STANDARD
-      { 20, 40, 0, 4, 2, 7, 7, 7, 7, 6 }, // High Volume
+      {20, 40, 0, 4, 2, 10, 12, 4, 4, 4}, // STANDARD
+      {20, 40, 0, 4, 2, 7, 7, 7, 7, 6}, // High Volume
   };
-  private static char[] actions = { 'h', 'q', 'l', 'o', 'r', 'a', 'p', 'b', 's', 'u' };
-  private static int sellDeficit = 0;
+  private static final char[] actions = {'h', 'q', 'l', 'o', 'r', 'a', 'p', 'b', 's', 'u'};
+  private static int sellDeficit;
   // Tracks the number of buys over sell when a users portfolio is empty
   // Used to maintain the correct ratio of buys/sells
 
@@ -218,7 +219,7 @@ public class TradeConfig {
     return runTimeModeNames;
   }
 
-  private static int scenarioCount = 0;
+  private static int scenarioCount;
 
   /**
    * Return a Trade Scenario Operation based on the setting of the current mix
@@ -289,10 +290,10 @@ public class TradeConfig {
   public static String nextUserID() {
     String userID;
     synchronized (userID_count_semaphore) {
-      userID = "uid:" + userID_count;
-      userID_count++;
-      if (userID_count % MAX_USERS == 0) {
-        userID_count = 0;
+      userID = "uid:" + userIDCount;
+      userIDCount++;
+      if (userIDCount % maxUsers == 0) {
+        userIDCount = 0;
       }
     }
     return userID;
@@ -324,15 +325,15 @@ public class TradeConfig {
   }
 
   public static int rndInt(int i) {
-    return (new Float(random() * i)).intValue();
+    return (Float.valueOf(random() * i)).intValue();
   }
 
   public static float rndFloat(int i) {
-    return (new Float(random() * i)).floatValue();
+    return (Float.valueOf(random() * i)).floatValue();
   }
 
   public static BigDecimal rndBigDecimal(float f) {
-    return (new BigDecimal(random() * f)).setScale(2, BigDecimal.ROUND_HALF_UP);
+    return (BigDecimal.valueOf(random() * f)).setScale(2, RoundingMode.HALF_UP);
   }
 
   public static boolean rndBoolean() {
@@ -348,10 +349,10 @@ public class TradeConfig {
   }
 
   public static float rndPrice() {
-    return ((new Integer(rndInt(200))).floatValue()) + 1.0f;
+    return ((Integer.valueOf(rndInt(200))).floatValue()) + 1.0f;
   }
 
-  private static final BigDecimal ONE = new BigDecimal(1.0);
+  private static final BigDecimal ONE = BigDecimal.valueOf(1.0);
 
   public static BigDecimal getRandomPriceChangeFactor() {
     // CJB (DAYTRADER-25) - Vary change factor between 1.1 and 0.9
@@ -362,7 +363,7 @@ public class TradeConfig {
     percentGain += 1;
 
     // change factor is between +/- 20%
-    BigDecimal percentGainBD = (new BigDecimal(percentGain)).setScale(2, BigDecimal.ROUND_HALF_UP);
+    BigDecimal percentGainBD = (BigDecimal.valueOf(percentGain)).setScale(2, RoundingMode.HALF_UP);
     if (percentGainBD.doubleValue() <= 0.0) {
       percentGainBD = ONE;
     }
@@ -371,21 +372,21 @@ public class TradeConfig {
   }
 
   public static float rndQuantity() {
-    return ((new Integer(rndInt(200))).floatValue()) + 1.0f;
+    return ((Integer.valueOf(rndInt(200))).floatValue()) + 1.0f;
   }
 
   public static String rndSymbol() {
-    return "s:" + rndInt(MAX_QUOTES - 1);
+    return "s:" + rndInt(maxQuotes - 1);
   }
 
   public static String rndSymbols() {
 
     String symbols = "";
-    int num_symbols = rndInt(QUOTES_PER_PAGE);
+    int numSymbols = rndInt(QUOTES_PER_PAGE);
 
-    for (int i = 0; i <= num_symbols; i++) {
-      symbols += "s:" + rndInt(MAX_QUOTES - 1);
-      if (i < num_symbols) {
+    for (int i = 0; i <= numSymbols; i++) {
+      symbols += "s:" + rndInt(maxQuotes - 1);
+      if (i < numSymbols) {
         symbols += ",";
       }
     }
@@ -404,9 +405,9 @@ public class TradeConfig {
   private static synchronized String getNextUserIDFromDeck() {
     int numUsers = getMAX_USERS();
     if (deck == null) {
-      deck = new ArrayList<Integer>(numUsers);
+      deck = new ArrayList<>(numUsers);
       for (int i = 0; i < numUsers; i++) {
-        deck.add(i, new Integer(i));
+        deck.add(i, Integer.valueOf(i));
       }
       java.util.Collections.shuffle(deck, r0);
     }
@@ -419,8 +420,8 @@ public class TradeConfig {
 
   // Trade implements a card deck approach to selecting
   // users for trading with tradescenarioservlet
-  private static ArrayList<Integer> deck = null;
-  private static int card = 0;
+  private static ArrayList<Integer> deck;
+  private static int card;
 
   /**
    * This is a convenience method for servlets to set Trade configuration
@@ -450,7 +451,7 @@ public class TradeConfig {
     }
     value = value.trim();
 
-    if (parm.equalsIgnoreCase("orderProcessingMode")) {
+    if ("orderProcessingMode".equalsIgnoreCase(parm)) {
       try {
         for (int i = 0; i < orderProcessingModeNames.length; i++) {
           if (value.equalsIgnoreCase(orderProcessingModeNames[i])) {
@@ -462,7 +463,7 @@ public class TradeConfig {
         Log.error("TradeConfig.setConfigParm(..): minor exception caught" + "trying to set orderProcessingMode to " + value
             + "reverting to current value: " + orderProcessingModeNames[orderProcessingMode], e);
       } // If the value is bad, simply revert to current
-    } else if (parm.equalsIgnoreCase("accessMode")) {
+    } else if ("accessMode".equalsIgnoreCase(parm)) {
       try {
         for (int i = 0; i < accessModeNames.length; i++) {
           if (value.equalsIgnoreCase(accessModeNames[i])) {
@@ -474,7 +475,7 @@ public class TradeConfig {
         Log.error("TradeConfig.setConfigParm(..): minor exception caught" + "trying to set accessMode to " + value + "reverting to current value: "
             + accessModeNames[accessMode], e);
       }
-    } else if (parm.equalsIgnoreCase("WebInterface")) {
+    } else if ("WebInterface".equalsIgnoreCase(parm)) {
       try {
         for (int i = 0; i < webInterfaceNames.length; i++) {
           if (value.equalsIgnoreCase(webInterfaceNames[i])) {
@@ -487,23 +488,23 @@ public class TradeConfig {
             + webInterfaceNames[webInterface], e);
 
       } // If the value is bad, simply revert to current
-    } else if (parm.equalsIgnoreCase("maxUsers")) {
+    } else if ("maxUsers".equalsIgnoreCase(parm)) {
       try {
-        MAX_USERS = Integer.parseInt(value);
+        maxUsers = Integer.parseInt(value);
       } catch (Exception e) {
         Log.error("TradeConfig.setConfigParm(..): minor exception caught" + "Setting maxusers, error parsing string to int:" + value
-            + "revering to current value: " + MAX_USERS, e);
+            + "revering to current value: " + maxUsers, e);
       } // On error, revert to saved
-    } else if (parm.equalsIgnoreCase("maxQuotes")) {
+    } else if ("maxQuotes".equalsIgnoreCase(parm)) {
       try {
-        MAX_QUOTES = Integer.parseInt(value);
+        maxQuotes = Integer.parseInt(value);
       } catch (Exception e) {
         // >>rjm
         Log.error("TradeConfig.setConfigParm(...) minor exception caught" + "Setting max_quotes, error parsing string to int " + value
-            + "reverting to current value: " + MAX_QUOTES, e);
+            + "reverting to current value: " + maxQuotes, e);
         // <<rjm
       } // On error, revert to saved
-    } else if (parm.equalsIgnoreCase("primIterations")) {
+    } else if ("primIterations".equalsIgnoreCase(parm)) {
       try {
         primIterations = Integer.parseInt(value);
       } catch (Exception e) {
@@ -555,7 +556,7 @@ public class TradeConfig {
    * @return Returns a int
    */
   public static int getMAX_USERS() {
-    return MAX_USERS;
+    return maxUsers;
   }
 
   /**
@@ -565,7 +566,7 @@ public class TradeConfig {
    *            The mAX_USERS to set
    */
   public static void setMAX_USERS(int mAX_USERS) {
-    MAX_USERS = mAX_USERS;
+    maxUsers = mAX_USERS;
     deck = null; // reset the card deck for selecting users
   }
 
@@ -575,7 +576,7 @@ public class TradeConfig {
    * @return Returns a int
    */
   public static int getMAX_QUOTES() {
-    return MAX_QUOTES;
+    return maxQuotes;
   }
 
   /**
@@ -585,7 +586,7 @@ public class TradeConfig {
    *            The mAX_QUOTES to set
    */
   public static void setMAX_QUOTES(int mAX_QUOTES) {
-    MAX_QUOTES = mAX_QUOTES;
+    maxQuotes = mAX_QUOTES;
   }
 
   /**
@@ -594,7 +595,7 @@ public class TradeConfig {
    * @return Returns a int
    */
   public static int getMAX_HOLDINGS() {
-    return MAX_HOLDINGS;
+    return maxHoldings;
   }
 
   /**
@@ -604,7 +605,7 @@ public class TradeConfig {
    *            The mAX_HOLDINGS to set
    */
   public static void setMAX_HOLDINGS(int mAX_HOLDINGS) {
-    MAX_HOLDINGS = mAX_HOLDINGS;
+    maxHoldings = mAX_HOLDINGS;
   }
 
   /**

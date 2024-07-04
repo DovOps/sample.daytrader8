@@ -97,7 +97,7 @@ public class TradeServletAction implements Serializable {
 
       AccountDataBean accountData = tAction.getAccountData(userID);
       AccountProfileDataBean accountProfileData = tAction.getAccountProfileData(userID);
-      Collection<?> orderDataBeans = (TradeConfig.getLongRun() ? new ArrayList<Object>() : (Collection<?>) tAction.getOrders(userID));
+      Collection<?> orderDataBeans = TradeConfig.getLongRun() ? new ArrayList<Object>() : (Collection<?>) tAction.getOrders(userID);
 
       req.setAttribute("accountData", accountData);
       req.setAttribute("accountProfileData", accountProfileData);
@@ -157,7 +157,7 @@ public class TradeServletAction implements Serializable {
 
     // First verify input data
     boolean doUpdate = true;
-    if (password.equals(cpassword) == false) {
+    if (!password.equals(cpassword)) {
       results = "Update profile error: passwords do not match";
       doUpdate = false;
     } else if (password.length() <= 0 || fullName.length() <= 0 || address.length() <= 0 || creditcard.length() <= 0 || email.length() <= 0) {
@@ -214,7 +214,7 @@ public class TradeServletAction implements Serializable {
 
     try {
 
-      OrderDataBean orderData = tAction.buy(userID, symbol, new Double(quantity).doubleValue(), TradeConfig.getOrderProcessingMode());
+      OrderDataBean orderData = tAction.buy(userID, symbol, Double.valueOf(quantity).doubleValue(), TradeConfig.getOrderProcessingMode());
 
       req.setAttribute("orderData", orderData);
       req.setAttribute("results", results);
@@ -454,12 +454,12 @@ public class TradeServletAction implements Serializable {
     try {
       // Get the holdiings for this user
 
-      Collection<QuoteDataBean> quoteDataBeans = new ArrayList<QuoteDataBean>();
+      Collection<QuoteDataBean> quoteDataBeans = new ArrayList<>();
       Collection<?> holdingDataBeans = tAction.getHoldings(userID);
 
       // Walk through the collection of user
       // holdings and creating a list of quotes
-      if (holdingDataBeans.size() > 0) {
+      if (!holdingDataBeans.isEmpty()) {
 
         Iterator<?> it = holdingDataBeans.iterator();
         while (it.hasNext()) {
@@ -510,7 +510,7 @@ public class TradeServletAction implements Serializable {
   void doQuotes(ServletContext ctx, HttpServletRequest req, HttpServletResponse resp, String userID, String symbols) throws ServletException, IOException {
 
     try {
-      Collection<QuoteDataBean> quoteDataBeans = new ArrayList<QuoteDataBean>();
+      Collection<QuoteDataBean> quoteDataBeans = new ArrayList<>();
       String[] symbolsSplit = symbols.split(",");
       for (String symbol: symbolsSplit) {
         QuoteDataBean quoteData = tAction.getQuote(symbol.trim());

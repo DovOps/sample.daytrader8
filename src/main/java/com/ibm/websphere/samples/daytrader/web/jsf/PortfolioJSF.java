@@ -58,10 +58,10 @@ public class PortfolioJSF {
   
   private BigDecimal holdingsTotal;
   private BigDecimal sumOfCashHoldings;
-  private BigDecimal totalGain = new BigDecimal(0.0);
-  private BigDecimal totalValue = new BigDecimal(0.0);
-  private BigDecimal totalBasis = new BigDecimal(0.0);
-  private BigDecimal totalGainPercent = new BigDecimal(0.0);
+  private BigDecimal totalGain = BigDecimal.valueOf(0.0);
+  private BigDecimal totalValue = BigDecimal.valueOf(0.0);
+  private BigDecimal totalBasis = BigDecimal.valueOf(0.0);
+  private BigDecimal totalGainPercent = BigDecimal.valueOf(0.0);
   private ArrayList<HoldingData> holdingDatas;
   private HtmlDataTable dataTable;
 
@@ -82,16 +82,16 @@ public class PortfolioJSF {
 
       // Walk through the collection of user holdings and creating a list
       // of quotes
-      if (holdingDataBeans.size() > 0) {
+      if (!holdingDataBeans.isEmpty()) {
         Iterator<?> it = holdingDataBeans.iterator();
-        holdingDatas = new ArrayList<HoldingData>(holdingDataBeans.size());
+        holdingDatas = new ArrayList<>(holdingDataBeans.size());
 
         while (it.hasNext()) {
           HoldingDataBean holdingData = (HoldingDataBean) it.next();
           QuoteDataBean quoteData = tradeAction.getQuote(holdingData.getQuoteID());
 
-          BigDecimal basis = holdingData.getPurchasePrice().multiply(new BigDecimal(holdingData.getQuantity()));
-          BigDecimal marketValue = quoteData.getPrice().multiply(new BigDecimal(holdingData.getQuantity()));
+          BigDecimal basis = holdingData.getPurchasePrice().multiply(BigDecimal.valueOf(holdingData.getQuantity()));
+          BigDecimal marketValue = quoteData.getPrice().multiply(BigDecimal.valueOf(holdingData.getQuantity()));
           totalBasis = totalBasis.add(basis);
           totalValue = totalValue.add(marketValue);
           BigDecimal gain = marketValue.subtract(basis);

@@ -95,7 +95,7 @@ public class MarketSummaryWebSocket {
     }
     
     
-    if (action != null && action.equals("updateMarketSummary")) {
+    if ("updateMarketSummary".equals(action)) {
 
       try {
 
@@ -108,7 +108,7 @@ public class MarketSummaryWebSocket {
       } catch (Exception e) {
         e.printStackTrace();
       }
-    } else if (action != null && action.equals("updateRecentQuotePriceChange")) {
+    } else if ("updateRecentQuotePriceChange".equals(action)) {
       if (!recentQuotePriceChangeList.isEmpty()) {
         currentSession.getAsyncRemote().sendObject(recentQuotePriceChangeList.recentList());
       }

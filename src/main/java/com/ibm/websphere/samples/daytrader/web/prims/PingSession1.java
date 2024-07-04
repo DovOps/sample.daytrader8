@@ -85,20 +85,20 @@ public class PingSession1 extends HttpServlet {
             Integer ival = (Integer) session.getAttribute("sessiontest.counter");
             // if their is not a counter create one.
             if (ival == null) {
-                ival = new Integer(count++);
+                ival = Integer.valueOf(count++);
                 session.setAttribute("sessiontest.counter", ival);
             }
-            String SessionID = "SessionID:" + ival.toString();
+            String sessionID = "SessionID:" + ival.toString();
 
             // Output the page
             response.setContentType("text/html");
-            response.setHeader("SessionKeyTest-SessionID", SessionID);
+            response.setHeader("SessionKeyTest-SessionID", sessionID);
 
             PrintWriter out = response.getWriter();
             out.println("<html><head><title>HTTP Session Key Test</title></head><body><HR><BR><FONT size=\"+2\" color=\"#000066\">HTTP Session Test 1: Session Key<BR></FONT><FONT size=\"+1\" color=\"#000066\">Init time: "
                     + initTime + "</FONT><BR><BR>");
             hitCount++;
-            out.println("<B>Hit Count: " + hitCount + "<BR>Your HTTP Session key is " + SessionID + "</B></body></html>");
+            out.println("<B>Hit Count: " + hitCount + "<BR>Your HTTP Session key is " + sessionID + "</B></body></html>");
         } catch (Exception e) {
             // log the excecption
             Log.error(e, "PingSession1.doGet(..l.): error.");

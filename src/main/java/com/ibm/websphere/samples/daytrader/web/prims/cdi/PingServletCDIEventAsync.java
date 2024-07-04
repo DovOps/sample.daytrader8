@@ -82,7 +82,7 @@ public class PingServletCDIEventAsync extends HttpServlet {
 
   public void onAsyncEvent2(@ObservesAsync @Priority(Interceptor.Priority.APPLICATION + 1) @HitAsync String event) {
     if (hitCount1 <= hitCount2 ) {
-      Log.error("Priority Error");;
+      Log.error("Priority Error");
     }
     hitCount2++;
   }

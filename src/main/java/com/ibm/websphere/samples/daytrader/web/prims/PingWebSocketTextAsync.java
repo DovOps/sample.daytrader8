@@ -31,8 +31,8 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint(value = "/pingTextAsync")
 public class PingWebSocketTextAsync {
 
-    private Session currentSession = null;
-    private Integer hitCount = null;
+    private Session currentSession;
+    private Integer hitCount;
    
     @OnOpen
     public void onOpen(final Session session, EndpointConfig ec) {

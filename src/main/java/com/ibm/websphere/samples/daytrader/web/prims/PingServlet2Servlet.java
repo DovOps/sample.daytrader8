@@ -38,7 +38,7 @@ import com.ibm.websphere.samples.daytrader.util.Log;
 @WebServlet(name = "PingServlet2Servlet", urlPatterns = { "/servlet/PingServlet2Servlet" })
 public class PingServlet2Servlet extends HttpServlet {
     private static final long serialVersionUID = -955942781902636048L;
-    private static int hitCount = 0;
+    private static int hitCount;
 
     /**
      * forwards post requests to the doGet method Creation date: (11/6/2000

@@ -21,9 +21,9 @@ import java.util.ListIterator;
 public class KeyBlock extends AbstractSequentialList<Object> {
 
     // min and max provide range of valid primary keys for this KeyBlock
-    private int min = 0;
-    private int max = 0;
-    private int index = 0;
+    private int min;
+    private int max;
+    private int index;
 
     /**
      * Constructor for KeyBlock
@@ -79,7 +79,7 @@ public class KeyBlock extends AbstractSequentialList<Object> {
             if (index > max) {
                 throw new java.lang.RuntimeException("KeyBlock:next() -- Error KeyBlock depleted");
             }
-            return new Integer(index++);
+            return Integer.valueOf(index++);
         }
 
         /**
@@ -95,7 +95,7 @@ public class KeyBlock extends AbstractSequentialList<Object> {
          */
         @Override
         public Object previous() {
-            return new Integer(--index);
+            return Integer.valueOf(--index);
         }
 
         /**

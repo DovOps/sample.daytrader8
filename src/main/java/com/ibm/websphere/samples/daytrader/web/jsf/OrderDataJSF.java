@@ -54,7 +54,7 @@ public class OrderDataJSF {
       HttpSession session = (HttpSession) context.getSession(true);
       String userID = (String) session.getAttribute("uidBean");
 
-      ArrayList<?> orderDataBeans = (TradeConfig.getLongRun() ? new ArrayList<Object>() : (ArrayList<?>) tradeAction.getOrders(userID));
+      ArrayList<?> orderDataBeans = TradeConfig.getLongRun() ? new ArrayList<Object>() : (ArrayList<?>) tradeAction.getOrders(userID);
       OrderData[] orders = new OrderData[orderDataBeans.size()];
 
       int count = 0;
@@ -64,7 +64,7 @@ public class OrderDataJSF {
             ((OrderDataBean) order).getOpenDate(), ((OrderDataBean) order).getCompletionDate(), ((OrderDataBean) order).getOrderFee(),
             ((OrderDataBean) order).getOrderType(), ((OrderDataBean) order).getQuantity(), ((OrderDataBean) order).getSymbol());
         r.setPrice(((OrderDataBean) order).getPrice());
-        r.setTotal(r.getPrice().multiply(new BigDecimal(r.getQuantity())));
+        r.setTotal(r.getPrice().multiply(BigDecimal.valueOf(r.getQuantity())));
         orders[count] = r;
         count++;
       }

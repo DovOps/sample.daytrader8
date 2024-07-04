@@ -39,7 +39,7 @@ import com.ibm.websphere.samples.daytrader.interfaces.QuotePriceChange;
 @ApplicationScoped
 public class RecentQuotePriceChangeList  {
 
-  private List<QuoteDataBean> list = new CopyOnWriteArrayList<QuoteDataBean>();
+  private List<QuoteDataBean> list = new CopyOnWriteArrayList<>();
   private int maxSize = 5;
 
   @Resource
@@ -51,7 +51,7 @@ public class RecentQuotePriceChangeList  {
 
   public boolean add(QuoteDataBean quoteData) {
 
-    int symbolNumber = new Integer(quoteData.getSymbol().substring(2));
+    int symbolNumber = Integer.valueOf(quoteData.getSymbol().substring(2));
 
     if ( symbolNumber < TradeConfig.getMAX_QUOTES() * TradeConfig.getListQuotePriceChangeFrequency() * 0.01) {
       list.add(0, quoteData);

@@ -242,7 +242,7 @@ public class TradeScenarioServlet extends HttpServlet {
                 boolean foundHoldingToSell = false;
                 while (it.hasNext()) {
                     HoldingDataBean holdingData = (HoldingDataBean) it.next();
-                    if (!(holdingData.getPurchaseDate().equals(new java.util.Date(0)))) {
+                    if (!holdingData.getPurchaseDate().equals(new java.util.Date(0))) {
                         Integer holdingID = holdingData.getHoldingID();
 
                         dispPath = tasPathPrefix + "sell&holdingID=" + holdingID;
@@ -275,7 +275,7 @@ public class TradeScenarioServlet extends HttpServlet {
              * denotes that this is a sell action that was switched from a buy
              * to reduce a sellDeficit
              */
-            if (userID.startsWith(TradeConfig.newUserPrefix) == false) {
+            if (!userID.startsWith(TradeConfig.newUserPrefix)) {
                 TradeConfig.incrementSellDeficit();
             }
         case 'b': // buy

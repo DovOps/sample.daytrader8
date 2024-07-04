@@ -41,8 +41,8 @@ import com.ibm.websphere.samples.daytrader.util.Log;
 public class PingSession3 extends HttpServlet {
     private static final long serialVersionUID = -6129599971684210414L;
     private static int NUM_OBJECTS = 2;
-    private static String initTime = null;
-    private static int hitCount = 0;
+    private static String initTime;
+    private static int hitCount;
 
     /**
      * forwards post requests to the doGet method Creation date: (11/6/2000
@@ -101,16 +101,16 @@ public class PingSession3 extends HttpServlet {
             // NUM_OBJECTS is changed, all user thread must be restarted
             // for the change to fully take effect
 
-            String num_objects;
-            if ((num_objects = request.getParameter("num_objects")) != null) {
+            String numObjects;
+            if ((numObjects = request.getParameter("num_objects")) != null) {
                 // validate input
                 try {
-                    int x = Integer.parseInt(num_objects);
+                    int x = Integer.parseInt(numObjects);
                     if (x > 0) {
                         NUM_OBJECTS = x;
                     }
                 } catch (Exception e) {
-                    Log.error(e, "PingSession3.doGet(...): input should be an integer, input=" + num_objects);
+                    Log.error(e, "PingSession3.doGet(...): input should be an integer, input=" + numObjects);
                 } // revert to current value on exception
 
                 outputBuffer.append("<html><head> Session object size set to " + NUM_OBJECTS + "K bytes </head><body></body></html>");
@@ -135,15 +135,15 @@ public class PingSession3 extends HttpServlet {
 
             // Each PingSession3Object is about 1024 bits, there are 8 bits in a
             // byte.
-            int num_bytes = (NUM_OBJECTS * 1024) / 8;
-            response.setHeader("SessionTrackingTest-largeSessionData", num_bytes + "bytes");
+            int numBytes = (NUM_OBJECTS * 1024) / 8;
+            response.setHeader("SessionTrackingTest-largeSessionData", numBytes + "bytes");
 
             outputBuffer
                     .append("<html><head><title>Session Large Data Test</title></head><body><HR><BR><FONT size=\"+2\" color=\"#000066\">HTTP Session Test 3: Large Data<BR></FONT><FONT size=\"+1\" color=\"#000066\">Init time: ")
                     .append(initTime).append("</FONT><BR><BR>");
             hitCount++;
             outputBuffer.append("<B>Hit Count: ").append(hitCount)
-                    .append("<BR>Session object updated. Session Object size = " + num_bytes + " bytes </B></body></html>");
+                    .append("<BR>Session object updated. Session Object size = " + numBytes + " bytes </B></body></html>");
             // output the Buffer to the printWriter.
             out.println(outputBuffer.toString());
 

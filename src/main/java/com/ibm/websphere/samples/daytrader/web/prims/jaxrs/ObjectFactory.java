@@ -22,7 +22,6 @@ import javax.xml.bind.annotation.XmlRegistry;
 public class ObjectFactory {
 
   public XMLObject createXMLObject() {
-    XMLObject xo = new XMLObject();
-    return xo;
+    return new XMLObject();
   }
 }

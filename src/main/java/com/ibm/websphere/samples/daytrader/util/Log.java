@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 
 public class Log {
 
-  private final static Logger log = Logger.getLogger("daytrader");
+  private static final Logger log = Logger.getLogger("daytrader");
 
 
   // A general purpose, high performance logging, tracing, statistic service

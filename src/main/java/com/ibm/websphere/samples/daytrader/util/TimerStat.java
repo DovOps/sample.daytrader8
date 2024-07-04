@@ -23,7 +23,9 @@ package com.ibm.websphere.samples.daytrader.util;
  */
 public class TimerStat {
 
-    private double min = 1000000000.0, max = 0.0, totalTime = 0.0;
+  private double min = 1000000000.0;
+  private double max = 0.0;
+  private double totalTime = 0.0;
     private int count;
 
     /**

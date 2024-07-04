@@ -32,7 +32,7 @@ public class Diagnostics {
 			Log.warning("DRIVE_MEMACCUMULATION=" + DRIVE_MEMACCUMULATION
 					+ " has been specified which will accumulate up to " + (DRIVE_MEMORY * DRIVE_MEMACCUMULATION)
 					+ " bytes");
-			accumulation = new ArrayBlockingQueue<byte[]>(DRIVE_MEMACCUMULATION);
+			accumulation = new ArrayBlockingQueue<>(DRIVE_MEMACCUMULATION);
 		} else {
 			accumulation = null;
 		}

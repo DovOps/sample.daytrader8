@@ -104,8 +104,9 @@ public class TradeConfigServlet extends HttpServlet {
     if (orderProcessingModeStr != null) {
       try {
         int i = Integer.parseInt(orderProcessingModeStr);
-        if ((i >= 0) && (i < TradeConfig.getOrderProcessingModeNames().length)) //Input validation
+        if ((i >= 0) && (i < TradeConfig.getOrderProcessingModeNames().length)) { //Input validation
           TradeConfig.setOrderProcessingMode(i);
+        }
       } catch (Exception e) {
         //>>rjm
         Log.error(e, "TradeConfigServlet.doConfigUpdate(..): minor exception caught", "trying to set orderProcessing to " + orderProcessingModeStr,
@@ -119,8 +120,9 @@ public class TradeConfigServlet extends HttpServlet {
     if (webInterfaceStr != null) {
       try {
         int i = Integer.parseInt(webInterfaceStr);
-        if ((i >= 0) && (i < TradeConfig.getWebInterfaceNames().length)) //Input validation
+        if ((i >= 0) && (i < TradeConfig.getWebInterfaceNames().length)) { //Input validation
           TradeConfig.setWebInterface(i);
+        }
       } catch (Exception e) {
         Log.error(e, "TradeConfigServlet.doConfigUpdate(..): minor exception caught", "trying to set WebInterface to " + webInterfaceStr,
             "reverting to current value");
@@ -180,10 +182,11 @@ public class TradeConfigServlet extends HttpServlet {
 
     String enablePublishQuotePriceChange = req.getParameter("EnablePublishQuotePriceChange");
 
-    if (enablePublishQuotePriceChange != null)
+    if (enablePublishQuotePriceChange != null) {
       TradeConfig.setPublishQuotePriceChange(true);
-    else
+    } else {
       TradeConfig.setPublishQuotePriceChange(false);
+    }
     currentConfigStr += "\t\tTradeStreamer MDB Enabled:\t" + TradeConfig.getPublishQuotePriceChange() + "\n";
 
     parm = req.getParameter("ListQuotePriceChangeFrequency");
@@ -200,18 +203,20 @@ public class TradeConfigServlet extends HttpServlet {
 
     String enableLongRun = req.getParameter("EnableLongRun");
 
-    if (enableLongRun != null)
+    if (enableLongRun != null) {
       TradeConfig.setLongRun(true);
-    else
+    } else {
       TradeConfig.setLongRun(false);
+    }
     currentConfigStr += "\t\tLong Run Enabled:\t\t" + TradeConfig.getLongRun() + "\n";
 
     String displayOrderAlerts = req.getParameter("DisplayOrderAlerts");
 
-    if (displayOrderAlerts != null)
+    if (displayOrderAlerts != null) {
       TradeConfig.setDisplayOrderAlerts(true);
-    else
+    } else {
       TradeConfig.setDisplayOrderAlerts(false);
+    }
     currentConfigStr += "\t\tDisplay Order Alerts:\t\t" + TradeConfig.getDisplayOrderAlerts() + "\n";
 
     System.out.println(currentConfigStr);
@@ -229,17 +234,17 @@ public class TradeConfigServlet extends HttpServlet {
       if (action == null) {
         doConfigDisplay(req, resp, result + "<b><br>Current DayTrader Configuration:</br></b>");
         return;
-      } else if (action.equals("updateConfig")) {
+      } else if ("updateConfig".equals(action)) {
         doConfigUpdate(req, resp);
         result = "<B><BR>DayTrader Configuration Updated</BR></B>";
-      } else if (action.equals("resetTrade")) {
+      } else if ("resetTrade".equals(action)) {
         doResetTrade(req, resp, "");
         return;
-      } else if (action.equals("buildDB")) {
+      } else if ("buildDB".equals(action)) {
         resp.setContentType("text/html");
         dbUtils.buildDB(resp.getWriter(), null);
         result = "DayTrader Database Built - " + TradeConfig.getMAX_USERS() + "users created";
-      } else if (action.equals("buildDBTables")) {
+      } else if ("buildDBTables".equals(action)) {
 
         resp.setContentType("text/html");
 

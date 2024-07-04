@@ -16,6 +16,7 @@
 package com.ibm.websphere.samples.daytrader.impl.ejb3;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Comparator;
@@ -127,7 +128,7 @@ public class TradeSLSBBean implements TradeServices {
             BigDecimal price = quote.getPrice();
             BigDecimal orderFee = order.getOrderFee();
             BigDecimal balance = account.getBalance();
-            total = (new BigDecimal(quantity).multiply(price)).add(orderFee);
+            total = (BigDecimal.valueOf(quantity).multiply(price)).add(orderFee);
             account.setBalance(balance.subtract(total));
             final Integer orderID=order.getOrderID();
 
@@ -183,7 +184,7 @@ public class TradeSLSBBean implements TradeServices {
             BigDecimal price = quote.getPrice();
             BigDecimal orderFee = order.getOrderFee();
             BigDecimal balance = account.getBalance();
-            total = (new BigDecimal(quantity).multiply(price)).subtract(orderFee);
+            total = (BigDecimal.valueOf(quantity).multiply(price)).subtract(orderFee);
             account.setBalance(balance.add(total));
             final Integer orderID=order.getOrderID(); 
 
@@ -207,7 +208,7 @@ public class TradeSLSBBean implements TradeServices {
     public void queueOrder(Integer orderID, boolean twoPhase) {
 
         // 2 phase
-        try (JMSContext queueContext = queueConnectionFactory.createContext();) {
+        try (JMSContext queueContext = queueConnectionFactory.createContext()) {
           TextMessage message = queueContext.createTextMessage();
 
           message.setStringProperty("command", "neworder");
@@ -393,7 +394,7 @@ public class TradeSLSBBean implements TradeServices {
             changeFactor = TradeConfig.MAXIMUM_STOCK_SPLIT_MULTIPLIER;
         }
 
-        BigDecimal newPrice = changeFactor.multiply(oldPrice).setScale(2, BigDecimal.ROUND_HALF_UP);
+        BigDecimal newPrice = changeFactor.multiply(oldPrice).setScale(2, RoundingMode.HALF_UP);
 
         quote.setPrice(newPrice);
         quote.setChange(newPrice.subtract(openPrice).doubleValue());
@@ -514,7 +515,7 @@ public class TradeSLSBBean implements TradeServices {
             return;
         }
 
-        try (JMSContext topicContext = topicConnectionFactory.createContext();) {
+        try (JMSContext topicContext = topicConnectionFactory.createContext()) {
             TextMessage message = topicContext.createTextMessage();
 
             message.setStringProperty("command", "updateQuote");
@@ -560,24 +561,23 @@ public class TradeSLSBBean implements TradeServices {
     @Override
     public double investmentReturn(double investment, double NetValue) throws Exception {
         double diff = NetValue - investment;
-        double ir = diff / investment;
-        return ir;
+        return diff / investment;
     }
 
     @Override
     public QuoteDataBean pingTwoPhase(String symbol) throws Exception {
         QuoteDataBean quoteData = null;
 
-        try (JMSContext queueContext = queueConnectionFactory.createContext();) {
+        try (JMSContext queueContext = queueConnectionFactory.createContext()) {
             // Get a Quote and send a JMS message in a 2-phase commit
             quoteData = entityManager.find(QuoteDataBean.class, symbol);
             
             double sharesTraded = (Math.random() * 100) + 1 ;
             BigDecimal oldPrice = quoteData.getPrice();
             BigDecimal openPrice = quoteData.getOpen();
-            BigDecimal changeFactor = new BigDecimal (Math.random() * 100);
+            BigDecimal changeFactor = BigDecimal.valueOf(Math.random() * 100);
 
-            BigDecimal newPrice = changeFactor.multiply(oldPrice).setScale(2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal newPrice = changeFactor.multiply(oldPrice).setScale(2, RoundingMode.HALF_UP);
 
             quoteData.setPrice(newPrice);
             quoteData.setChange(newPrice.subtract(openPrice).doubleValue());
@@ -602,7 +602,7 @@ public class TradeSLSBBean implements TradeServices {
         public int compare(QuoteDataBean quote1, QuoteDataBean quote2) {
             double change1 = quote1.getChange();
             double change2 = quote2.getChange();
-            return new Double(change2).compareTo(change1);
+            return Double.compare(change2, change1);
         }
     }
 

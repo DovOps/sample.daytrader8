@@ -33,9 +33,16 @@ public class PingSession3Object implements Serializable {
     private static final long serialVersionUID = 1452347702903504717L;
     byte[] byteVal = new byte[16]; // 8 * 16 = 128 bits
     char[] charVal = new char[8]; // 16 * 8 = 128 bits
-    int a, b, c, d; // 4 * 32 = 128 bits
-    float e, f, g, h; // 4 * 32 = 128 bits
-    double i, j; // 2 * 64 = 128 bits
+  int a;
+  int b;
+  int c;
+  int d; // 4 * 32 = 128 bits
+  float e;
+  float f;
+  float g;
+  float h; // 4 * 32 = 128 bits
+  double i;
+  double j; // 2 * 64 = 128 bits
     // Primitive type size = ~5*128= 640
 
     String s1 = new String("123456789012");

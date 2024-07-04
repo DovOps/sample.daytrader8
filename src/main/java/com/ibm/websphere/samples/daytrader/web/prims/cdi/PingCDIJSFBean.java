@@ -25,7 +25,7 @@ import javax.inject.Named;
 public class PingCDIJSFBean implements Serializable {
 
   private static final long serialVersionUID = -7475815494313679416L;
-  private int hitCount = 0;
+  private int hitCount;
 
   public int getHitCount() {
     return ++hitCount;

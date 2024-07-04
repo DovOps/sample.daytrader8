@@ -125,7 +125,7 @@ public class AccountDataBean implements Serializable {
     }
 
     public static AccountDataBean getRandomInstance() {
-        return new AccountDataBean(new Integer(TradeConfig.rndInt(100000)), // accountID
+        return new AccountDataBean(Integer.valueOf(TradeConfig.rndInt(100000)), // accountID
                 TradeConfig.rndInt(10000), // loginCount
                 TradeConfig.rndInt(10000), // logoutCount
                 new java.util.Date(), // lastLogin
@@ -248,9 +248,9 @@ public class AccountDataBean implements Serializable {
 
     public void login(String password) {
         AccountProfileDataBean profile = getProfile();
-        if ((profile == null) || (profile.getPassword().equals(password) == false)) {
+        if ((profile == null) || (!profile.getPassword().equals(password))) {
             String error = "AccountBean:Login failure for account: " + getAccountID()
-                    + ((profile == null) ? "null AccountProfile" : "\n\tIncorrect password-->" + profile.getUserID() + ":" + profile.getPassword());
+                    + (profile == null ? "null AccountProfile" : "\n\tIncorrect password-->" + profile.getUserID() + ":" + profile.getPassword());
             throw new EJBException(error);
         }
 
@@ -265,7 +265,7 @@ public class AccountDataBean implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (this.accountID != null ? this.accountID.hashCode() : 0);
+        hash += this.accountID != null ? this.accountID.hashCode() : 0;
         return hash;
     }
 
@@ -277,10 +277,6 @@ public class AccountDataBean implements Serializable {
         }
         AccountDataBean other = (AccountDataBean) object;
 
-        if (this.accountID != other.accountID && (this.accountID == null || !this.accountID.equals(other.accountID))) {
-            return false;
-        }
-
-        return true;
+      return !(this.accountID != other.accountID && (this.accountID == null || !this.accountID.equals(other.accountID)));
     }
 }

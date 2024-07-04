@@ -21,11 +21,11 @@ package com.ibm.websphere.samples.daytrader.util;
  * Window>Preferences>Java>Templates. To enable and disable the creation of type
  * comments go to Window>Preferences>Java>Code Generation.
  */
-public class MDBStats extends java.util.HashMap<String, TimerStat> {
+public final class MDBStats extends java.util.HashMap<String, TimerStat> {
 
     private static final long serialVersionUID = -3759835921094193760L;
     // Singleton class
-    private static MDBStats mdbStats = null;
+    private static MDBStats mdbStats;
 
     private MDBStats() {
     }

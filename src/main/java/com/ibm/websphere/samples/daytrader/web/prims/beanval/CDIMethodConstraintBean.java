@@ -28,7 +28,7 @@ import javax.validation.constraints.Size;
 @RequestScoped
 public class CDIMethodConstraintBean {
 
-  private static int hitCount = 0;
+  private static int hitCount;
   private List<Integer> list = new ArrayList<>();
 
   // Dumb primitive, beanval checks that the date passed in is valid and that the 

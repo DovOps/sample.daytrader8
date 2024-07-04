@@ -33,7 +33,7 @@ public class PingServletBeanValSimple1  extends HttpServlet {
 
   private static final long serialVersionUID = 7097023236709683760L;
   private static LocalDateTime initTime;
-  private static int hitCount = 0;
+  private static int hitCount;
 
 
   /**

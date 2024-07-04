@@ -151,7 +151,8 @@ public class QuoteData {
     }
 
     public String getChangeHTML() {
-        String htmlString, arrow;
+      String htmlString;
+      String arrow;
         if (change < 0.0) {
             htmlString = "<FONT color=\"#cc0000\">";
             arrow = "arrowdown.gif";

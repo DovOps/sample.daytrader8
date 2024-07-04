@@ -91,9 +91,9 @@ public class DTBroker3MDB implements MessageListener {
         Log.debug("DTBroker3MDB:onMessage -- received message with null command. Message-->" + message);
         return;
       }
-      if (command.equalsIgnoreCase("neworder")) {
+      if ("neworder".equalsIgnoreCase(command)) {
         /* Get the Order ID and complete the Order */
-        Integer orderID = new Integer(message.getIntProperty("orderID"));
+        Integer orderID = Integer.valueOf(message.getIntProperty("orderID"));
         boolean twoPhase = message.getBooleanProperty("twoPhase");
         boolean direct = message.getBooleanProperty("direct");
         long publishTime = message.getLongProperty("publishTime");
@@ -127,7 +127,7 @@ public class DTBroker3MDB implements MessageListener {
            * e); }
            */
         }
-      } else if (command.equalsIgnoreCase("ping")) {
+      } else if ("ping".equalsIgnoreCase(command)) {
 
         Log.trace("DTBroker3MDB:onMessage  received test command -- message: " + ((TextMessage) message).getText());
 

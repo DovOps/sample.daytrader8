@@ -159,7 +159,7 @@ public class TradeAppJSF implements Serializable {
     // First verify input data
     boolean doUpdate = true;
 
-    if (password.equals(cpassword) == false) {
+    if (!password.equals(cpassword)) {
       results = "Update profile error: passwords do not match";
       doUpdate = false;
     }

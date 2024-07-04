@@ -89,7 +89,7 @@ public class TestServlet extends HttpServlet {
             Log.debug("Enter TestServlet doGet");
             //TradeDirect tradeDirect = new TradeDirect();
             for (int i = 0; i < 10; i++) {
-                tradeAction.createQuote("s:" + i, "Company " + i, new BigDecimal(i * 1.1));
+                tradeAction.createQuote("s:" + i, "Company " + i, BigDecimal.valueOf(i * 1.1));
             }
             /*
              *

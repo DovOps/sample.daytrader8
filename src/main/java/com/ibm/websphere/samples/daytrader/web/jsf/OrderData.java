@@ -53,7 +53,7 @@ public class OrderData {
         this.quantity = quantity;
         this.symbol = symbol;
         this.price = price;
-        this.total = price.multiply(new BigDecimal(quantity));
+        this.total = price.multiply(BigDecimal.valueOf(quantity));
 
     }
 

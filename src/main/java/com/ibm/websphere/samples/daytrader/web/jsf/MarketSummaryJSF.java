@@ -43,7 +43,7 @@ public class MarketSummaryJSF {
 
   private TradeServices tradeAction;
 
-  private BigDecimal TSIA;
+  private BigDecimal tsia;
   private BigDecimal openTSIA;
   private double volume;
   private QuoteData[] topGainers;
@@ -51,7 +51,7 @@ public class MarketSummaryJSF {
   private Date summaryDate;
 
   // cache the gainPercent once computed for this bean
-  private BigDecimal gainPercent = null;
+  private BigDecimal gainPercent;
 
   @Inject 
   public MarketSummaryJSF(@Any Instance<TradeServices> services) {
@@ -104,11 +104,11 @@ public class MarketSummaryJSF {
   }
 
   public void setTSIA(BigDecimal tSIA) {
-    TSIA = tSIA;
+    tsia = tSIA;
   }
 
   public BigDecimal getTSIA() {
-    return TSIA;
+    return tsia;
   }
 
   public void setOpenTSIA(BigDecimal openTSIA) {

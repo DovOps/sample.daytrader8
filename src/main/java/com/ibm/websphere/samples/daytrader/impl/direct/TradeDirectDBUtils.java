@@ -84,7 +84,8 @@ public class TradeDirectDBUtils implements TradeDB {
    * Re-create the DayTrader db tables and populate them OR just populate a DayTrader DB, logging to the provided output stream
    */
   public void buildDB(java.io.PrintWriter out, InputStream ddlFile) throws Exception {
-    String symbol, companyName;
+    String symbol;
+    String companyName;
     int errorCount = 0; // Give up gracefully after 10 errors
 
     //  TradeStatistics.statisticsEnabled=false;  // disable statistics
@@ -139,7 +140,7 @@ public class TradeDirectDBUtils implements TradeDB {
       symbol = "s:" + i;
       companyName = "S" + i + " Incorporated";
       try {
-        ts.createQuote(symbol, companyName, new java.math.BigDecimal(TradeConfig.rndPrice()));
+        ts.createQuote(symbol, companyName, BigDecimal.valueOf(TradeConfig.rndPrice()));
         if (i % 10 == 0) {
           out.print("....." + symbol);
           if (i % 100 == 0) {
@@ -172,7 +173,7 @@ public class TradeDirectDBUtils implements TradeDB {
         initialBalance = 1000000; // uid:0 starts with a cool million.
       }
       try {
-        AccountDataBean accountData = ts.register(userID, "xxx", fullname, address, email, creditcard, new BigDecimal(initialBalance));
+        AccountDataBean accountData = ts.register(userID, "xxx", fullname, address, email, creditcard, BigDecimal.valueOf(initialBalance));
 
         if (accountData != null) {
           if (i % 50 == 0) {
@@ -437,7 +438,7 @@ public class TradeDirectDBUtils implements TradeDB {
 
   public Object[] parseDDLToBuffer(InputStream ddlFile) throws Exception {
     BufferedReader br = null;
-    ArrayList<String> sqlBuffer = new ArrayList<String>(30); //initial capacity 30 assuming we have 30 ddl-sql statements to read
+    ArrayList<String> sqlBuffer = new ArrayList<>(30); //initial capacity 30 assuming we have 30 ddl-sql statements to read
 
     try {
       br = new BufferedReader(new InputStreamReader(ddlFile));

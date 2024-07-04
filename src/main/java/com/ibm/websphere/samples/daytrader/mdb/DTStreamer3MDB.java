@@ -74,7 +74,7 @@ public class DTStreamer3MDB implements MessageListener {
         Log.debug("DTStreamer3MDB:onMessage -- received message with null command. Message-->" + message);
         return;
       }
-      if (command.equalsIgnoreCase("updateQuote")) {
+      if ("updateQuote".equalsIgnoreCase(command)) {
         Log.trace("DTStreamer3MDB:onMessage -- received message -->" + ((TextMessage) message).getText() + "\n\t symbol = "
               + message.getStringProperty("symbol") + "\n\t current price =" + message.getStringProperty("price") + "\n\t old price ="
               + message.getStringProperty("oldPrice"));
@@ -92,7 +92,7 @@ public class DTStreamer3MDB implements MessageListener {
               " max: " +currentStats.getMaxSecs()+
               " avg: " +currentStats.getAvgSecs() );
         }
-      } else if (command.equalsIgnoreCase("ping")) {
+      } else if ("ping".equalsIgnoreCase(command)) {
         Log.trace("DTStreamer3MDB:onMessage  received ping command -- message: " + ((TextMessage) message).getText());
         
 

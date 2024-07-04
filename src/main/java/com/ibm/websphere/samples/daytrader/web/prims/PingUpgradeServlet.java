@@ -103,10 +103,10 @@ public class PingUpgradeServlet extends HttpServlet {
     }
   }
 
-  private static class Listener implements ReadListener {
+  private static final class Listener implements ReadListener {
     private final WebConnection connection;
-    private ServletInputStream input = null;
-    private ServletOutputStream output = null;
+    private ServletInputStream input;
+    private ServletOutputStream output;
 
     private Listener(final WebConnection connection) throws IOException  {
       this.connection = connection;

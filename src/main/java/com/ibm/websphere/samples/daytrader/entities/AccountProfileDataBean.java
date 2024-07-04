@@ -163,7 +163,7 @@ public class AccountProfileDataBean implements java.io.Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (this.userID != null ? this.userID.hashCode() : 0);
+        hash += this.userID != null ? this.userID.hashCode() : 0;
         return hash;
     }
 
@@ -175,10 +175,6 @@ public class AccountProfileDataBean implements java.io.Serializable {
         }
         AccountProfileDataBean other = (AccountProfileDataBean) object;
 
-        if (this.userID != other.userID && (this.userID == null || !this.userID.equals(other.userID))) {
-            return false;
-        }
-
-        return true;
+      return !(this.userID != other.userID && (this.userID == null || !this.userID.equals(other.userID)));
     }
 }

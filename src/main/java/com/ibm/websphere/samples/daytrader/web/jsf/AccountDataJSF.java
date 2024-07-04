@@ -104,7 +104,7 @@ public class AccountDataJSF {
 
         Collection<?> closedOrders = tradeAction.getClosedOrders(userID);
 
-        if (closedOrders != null && closedOrders.size() > 0) {
+        if (closedOrders != null && !closedOrders.isEmpty()) {
           session.setAttribute("closedOrders", closedOrders);
           OrderData[] orderjsfs = new OrderData[closedOrders.size()];
           Iterator<?> it = closedOrders.iterator();
@@ -122,9 +122,9 @@ public class AccountDataJSF {
         }
       }
 
-      Collection<?> orderDataBeans = (TradeConfig.getLongRun() ? new ArrayList<Object>() : (Collection<?>) tradeAction.getOrders(userID));
+      Collection<?> orderDataBeans = TradeConfig.getLongRun() ? new ArrayList<Object>() : (Collection<?>) tradeAction.getOrders(userID);
 
-      if (orderDataBeans != null && orderDataBeans.size() > 0) {
+      if (orderDataBeans != null && !orderDataBeans.isEmpty()) {
         session.setAttribute("orderDataBeans", orderDataBeans);
         OrderData[] orderjsfs = new OrderData[orderDataBeans.size()];
         Iterator<?> it = orderDataBeans.iterator();

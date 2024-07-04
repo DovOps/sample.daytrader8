@@ -44,7 +44,7 @@ public class QuoteJSF {
   private TradeServices tradeAction;
 
   private QuoteData[] quotes;
-  private String symbols = null;
+  private String symbols;
   private HtmlDataTable dataTable;
   private Integer quantity = 100;
 
@@ -99,7 +99,7 @@ public class QuoteJSF {
     OrderDataBean orderDataBean;
 
     try {
-      orderDataBean = tradeAction.buy(userID, quoteData.getSymbol(), new Double(this.quantity).doubleValue(), TradeConfig.getOrderProcessingMode());
+      orderDataBean = tradeAction.buy(userID, quoteData.getSymbol(), Double.valueOf(this.quantity).doubleValue(), TradeConfig.getOrderProcessingMode());
 
       OrderData orderData = new OrderData(orderDataBean.getOrderID(), orderDataBean.getOrderStatus(), orderDataBean.getOpenDate(),
           orderDataBean.getCompletionDate(), orderDataBean.getOrderFee(), orderDataBean.getOrderType(), orderDataBean.getQuantity(),

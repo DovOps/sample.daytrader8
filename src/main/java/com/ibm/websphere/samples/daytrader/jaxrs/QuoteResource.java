@@ -66,7 +66,7 @@ public class QuoteResource {
   }
   
   private List<QuoteDataBean> getQuotes(String symbols) {
-    ArrayList<QuoteDataBean> quoteDataBeans = new ArrayList<QuoteDataBean>();
+    ArrayList<QuoteDataBean> quoteDataBeans = new ArrayList<>();
 
     try {
       String[] symbolsSplit = symbols.split(",");

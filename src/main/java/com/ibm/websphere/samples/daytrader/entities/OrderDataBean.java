@@ -150,7 +150,7 @@ public class OrderDataBean implements Serializable {
     }
 
     public static OrderDataBean getRandomInstance() {
-        return new OrderDataBean(new Integer(TradeConfig.rndInt(100000)), TradeConfig.rndBoolean() ? "buy" : "sell", "open", new java.util.Date(
+        return new OrderDataBean(Integer.valueOf(TradeConfig.rndInt(100000)), TradeConfig.rndBoolean() ? "buy" : "sell", "open", new java.util.Date(
                 TradeConfig.rndInt(Integer.MAX_VALUE)), new java.util.Date(TradeConfig.rndInt(Integer.MAX_VALUE)), TradeConfig.rndQuantity(),
                 TradeConfig.rndBigDecimal(1000.0f), TradeConfig.rndBigDecimal(1000.0f), TradeConfig.rndSymbol());
     }
@@ -274,43 +274,28 @@ public class OrderDataBean implements Serializable {
 
     public boolean isBuy() {
         String orderType = getOrderType();
-        if (orderType.compareToIgnoreCase("buy") == 0) {
-            return true;
-        }
-        return false;
+      return orderType.compareToIgnoreCase("buy") == 0;
     }
 
     public boolean isSell() {
         String orderType = getOrderType();
-        if (orderType.compareToIgnoreCase("sell") == 0) {
-            return true;
-        }
-        return false;
+      return orderType.compareToIgnoreCase("sell") == 0;
     }
 
     public boolean isOpen() {
         String orderStatus = getOrderStatus();
-        if ((orderStatus.compareToIgnoreCase("open") == 0) || (orderStatus.compareToIgnoreCase("processing") == 0)) {
-            return true;
-        }
-        return false;
+      return (orderStatus.compareToIgnoreCase("open") == 0) || (orderStatus.compareToIgnoreCase("processing") == 0);
     }
 
     public boolean isCompleted() {
         String orderStatus = getOrderStatus();
-        if ((orderStatus.compareToIgnoreCase("completed") == 0) || (orderStatus.compareToIgnoreCase("alertcompleted") == 0)
-                || (orderStatus.compareToIgnoreCase("cancelled") == 0)) {
-            return true;
-        }
-        return false;
+      return (orderStatus.compareToIgnoreCase("completed") == 0) || (orderStatus.compareToIgnoreCase("alertcompleted") == 0)
+          || (orderStatus.compareToIgnoreCase("cancelled") == 0);
     }
 
     public boolean isCancelled() {
         String orderStatus = getOrderStatus();
-        if (orderStatus.compareToIgnoreCase("cancelled") == 0) {
-            return true;
-        }
-        return false;
+      return orderStatus.compareToIgnoreCase("cancelled") == 0;
     }
 
     public void cancel() {
@@ -320,7 +305,7 @@ public class OrderDataBean implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (this.orderID != null ? this.orderID.hashCode() : 0);
+        hash += this.orderID != null ? this.orderID.hashCode() : 0;
         return hash;
     }
 
@@ -331,9 +316,6 @@ public class OrderDataBean implements Serializable {
             return false;
         }
         OrderDataBean other = (OrderDataBean) object;
-        if (this.orderID != other.orderID && (this.orderID == null || !this.orderID.equals(other.orderID))) {
-            return false;
-        }
-        return true;
+      return !(this.orderID != other.orderID && (this.orderID == null || !this.orderID.equals(other.orderID)));
     }
 }

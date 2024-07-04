@@ -50,7 +50,7 @@ public class MarketSummaryDataBean implements Serializable {
     private Date summaryDate; /* Date this summary was taken */
 
     // cache the gainPercent once computed for this bean
-    private BigDecimal gainPercent = null;
+    private BigDecimal gainPercent;
 
     public MarketSummaryDataBean() {
     }
@@ -68,8 +68,8 @@ public class MarketSummaryDataBean implements Serializable {
     }
 
     public static MarketSummaryDataBean getRandomInstance() {
-        Collection<QuoteDataBean> gain = new ArrayList<QuoteDataBean>();
-        Collection<QuoteDataBean> lose = new ArrayList<QuoteDataBean>();
+        Collection<QuoteDataBean> gain = new ArrayList<>();
+        Collection<QuoteDataBean> lose = new ArrayList<>();
 
         for (int ii = 0; ii < 5; ii++) {
             QuoteDataBean quote1 = QuoteDataBean.getRandomInstance();
@@ -94,13 +94,13 @@ public class MarketSummaryDataBean implements Serializable {
         Iterator<QuoteDataBean> it = getTopGainers().iterator();
         while (it.hasNext()) {
             QuoteDataBean quoteData = it.next();
-            ret += ("\n\t\t\t" + quoteData.toString());
+            ret += "\n\t\t\t" + quoteData.toString();
         }
         ret += "\n\t\t   Current Top Losers:";
         it = getTopLosers().iterator();
         while (it.hasNext()) {
             QuoteDataBean quoteData = it.next();
-            ret += ("\n\t\t\t" + quoteData.toString());
+            ret += "\n\t\t\t" + quoteData.toString();
         }
         return ret;
     }
@@ -116,13 +116,13 @@ public class MarketSummaryDataBean implements Serializable {
 
         while (it.hasNext()) {
             QuoteDataBean quoteData = it.next();
-            ret += ("<LI>" + quoteData.toString() + "</LI>");
+            ret += "<LI>" + quoteData.toString() + "</LI>";
         }
         ret += "<BR>   Current Top Losers:";
         it = getTopLosers().iterator();
         while (it.hasNext()) {
             QuoteDataBean quoteData = it.next();
-            ret += ("<LI>" + quoteData.toString() + "</LI>");
+            ret += "<LI>" + quoteData.toString() + "</LI>";
         }
         return ret;
     }

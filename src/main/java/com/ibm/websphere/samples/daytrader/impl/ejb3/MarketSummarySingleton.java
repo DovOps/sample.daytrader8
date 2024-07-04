@@ -91,9 +91,9 @@ public class MarketSummarySingleton {
 
     /* TODO: Make this cleaner? */
     QuoteDataBean[] quoteArray = quotes.toArray(new QuoteDataBean[quotes.size()]);
-    ArrayList<QuoteDataBean> topGainers = new ArrayList<QuoteDataBean>(5);
-    ArrayList<QuoteDataBean> topLosers = new ArrayList<QuoteDataBean>(5);
-    BigDecimal TSIA = FinancialUtils.ZERO;
+    ArrayList<QuoteDataBean> topGainers = new ArrayList<>(5);
+    ArrayList<QuoteDataBean> topLosers = new ArrayList<>(5);
+    BigDecimal tsia = FinancialUtils.ZERO;
     BigDecimal openTSIA = FinancialUtils.ZERO;
     double totalVolume = 0.0;
 
@@ -109,15 +109,15 @@ public class MarketSummarySingleton {
         BigDecimal price = quote.getPrice();
         BigDecimal open = quote.getOpen();
         double volume = quote.getVolume();
-        TSIA = TSIA.add(price);
+        tsia = tsia.add(price);
         openTSIA = openTSIA.add(open);
         totalVolume += volume;
       }
-      TSIA = TSIA.divide(new BigDecimal(quoteArray.length), FinancialUtils.ROUND);
+      tsia = tsia.divide(new BigDecimal(quoteArray.length), FinancialUtils.ROUND);
       openTSIA = openTSIA.divide(new BigDecimal(quoteArray.length), FinancialUtils.ROUND);
     }
 
-    setMarketSummaryDataBean(new MarketSummaryDataBean(TSIA, openTSIA, totalVolume, topGainers, topLosers));
+    setMarketSummaryDataBean(new MarketSummaryDataBean(tsia, openTSIA, totalVolume, topGainers, topLosers));
     mkSummaryUpdateEvent.fireAsync("MarketSummaryUpdate", NotificationOptions.builder().setExecutor(mes).build());
   }
 

@@ -131,12 +131,12 @@ public class TradeAppServlet extends HttpServlet {
     if (action == null) {
       tsAction.doWelcome(ctx, req, resp, "");
       return;
-    } else if (action.equals("login")) {
+    } else if ("login".equals(action)) {
       userID = req.getParameter("uid");
       String passwd = req.getParameter("passwd");
       tsAction.doLogin(ctx, req, resp, userID, passwd);
       return;
-    } else if (action.equals("register")) {
+    } else if ("register".equals(action)) {
       userID = req.getParameter("user id");
       String passwd = req.getParameter("passwd");
       String cpasswd = req.getParameter("confirm passwd");
@@ -162,29 +162,29 @@ public class TradeAppServlet extends HttpServlet {
     
     // try http/2 push if we get here
     // should be logged in and doing real work by this point
-    if (!action.equals("logout") && TradeConfig.getWebInterface() == TradeConfig.JSP_Images_HTTP2) {
+    if (!"logout".equals(action) && TradeConfig.getWebInterface() == TradeConfig.JSP_Images_HTTP2) {
       pushHeaderImages(req.newPushBuilder());
     }
     
-    if (action.equals("quotes")) {
+    if ("quotes".equals(action)) {
       String symbols = req.getParameter("symbols");
       tsAction.doQuotes(ctx, req, resp, userID, symbols);
-    } else if (action.equals("buy")) {
+    } else if ("buy".equals(action)) {
       String symbol = req.getParameter("symbol");
       String quantity = req.getParameter("quantity");
       tsAction.doBuy(ctx, req, resp, userID, symbol, quantity);
-    } else if (action.equals("sell")) {
+    } else if ("sell".equals(action)) {
       int holdingID = Integer.parseInt(req.getParameter("holdingID"));
-      tsAction.doSell(ctx, req, resp, userID, new Integer(holdingID));
-    } else if (action.equals("portfolio") || action.equals("portfolioNoEdge")) {
+      tsAction.doSell(ctx, req, resp, userID, Integer.valueOf(holdingID));
+    } else if ("portfolio".equals(action) || "portfolioNoEdge".equals(action)) {
       tsAction.doPortfolio(ctx, req, resp, userID, "Portfolio as of " + new java.util.Date());
-    } else if (action.equals("logout")) {
+    } else if ("logout".equals(action)) {
       tsAction.doLogout(ctx, req, resp, userID);
-    } else if (action.equals("home")) {
+    } else if ("home".equals(action)) {
       tsAction.doHome(ctx, req, resp, userID, "Ready to Trade");
-    } else if (action.equals("account")) {
+    } else if ("account".equals(action)) {
       tsAction.doAccount(ctx, req, resp, userID, "");
-    } else if (action.equals("update_profile")) {      
+    } else if ("update_profile".equals(action)) {      
       String password = req.getParameter("password");
       String cpassword = req.getParameter("cpassword");
       String fullName = req.getParameter("fullname");
@@ -194,7 +194,7 @@ public class TradeAppServlet extends HttpServlet {
       tsAction.doAccountUpdate(ctx, req, resp, userID, password == null ? "" : password.trim(), cpassword == null ? "" : cpassword.trim(),
           fullName == null ? "" : fullName.trim(), address == null ? "" : address.trim(), creditcard == null ? "" : creditcard.trim(),
               email == null ? "" : email.trim());
-    } else if (action.equals("mksummary")) {
+    } else if ("mksummary".equals(action)) {
       tsAction.doMarketSummary(ctx, req, resp, userID);
     } else {
       System.out.println("TradeAppServlet: Invalid Action=" + action);

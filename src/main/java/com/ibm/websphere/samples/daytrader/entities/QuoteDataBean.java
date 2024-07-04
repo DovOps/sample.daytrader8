@@ -194,7 +194,7 @@ public class QuoteDataBean implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (this.symbol != null ? this.symbol.hashCode() : 0);
+        hash += this.symbol != null ? this.symbol.hashCode() : 0;
         return hash;
     }
 
@@ -205,9 +205,6 @@ public class QuoteDataBean implements Serializable {
             return false;
         }
         QuoteDataBean other = (QuoteDataBean) object;
-        if (this.symbol != other.symbol && (this.symbol == null || !this.symbol.equals(other.symbol))) {
-            return false;
-        }
-        return true;
+      return !(this.symbol != other.symbol && (this.symbol == null || !this.symbol.equals(other.symbol)));
     }
 }

@@ -37,9 +37,9 @@ public class SimpleBean1 {
    * debug log at the time the class is loaded.
    */
   private static final String thisClass = SimpleBean1.class.getName();
-  private static Logger traceLogger = Logger.getLogger(thisClass);
-  private static ValidatorFactory validatorFactory = null;
-  private Validator validator;
+  private static final Logger traceLogger = Logger.getLogger(thisClass);
+  private static ValidatorFactory validatorFactory;
+  private final Validator validator;
 
   @Min(1)
   int iMin = 1;
@@ -54,7 +54,7 @@ public class SimpleBean1 {
 
 
 
-  boolean setToFail = false;
+  boolean setToFail;
 
 
 
@@ -91,10 +91,8 @@ public class SimpleBean1 {
 
   @Override
   public String toString() {
-    String result = "iMin:" + iMin + " iMax:" + iMax + " iMinArray:" + iMinArray + " iMaxArray:" + iMaxArray + " pattern:" + pattern
+    return "iMin:" + iMin + " iMax:" + iMax + " iMinArray:" + iMinArray + " iMaxArray:" + iMaxArray + " pattern:" + pattern
         + " setToFail:" + setToFail;
-
-    return result;
   }
 
   /**

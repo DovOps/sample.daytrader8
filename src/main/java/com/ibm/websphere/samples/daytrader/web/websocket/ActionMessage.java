@@ -40,7 +40,7 @@ import com.ibm.websphere.samples.daytrader.util.Log;
  */
 public class ActionMessage {
 
-  String decodedAction = null;
+  String decodedAction;
 
   public ActionMessage() {  
   }
@@ -59,7 +59,7 @@ public class ActionMessage {
           keyName=parser.getString();
           break;
         case VALUE_STRING:
-          if (keyName != null && keyName.equals("action")) {
+          if ("action".equals(keyName)) {
             decodedAction=parser.getString();
           }
           break;

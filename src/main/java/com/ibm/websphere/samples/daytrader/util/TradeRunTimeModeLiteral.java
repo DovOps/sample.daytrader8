@@ -22,7 +22,7 @@ import com.ibm.websphere.samples.daytrader.interfaces.RuntimeMode;
 public class TradeRunTimeModeLiteral extends AnnotationLiteral<RuntimeMode> implements RuntimeMode {
   
   private static final long serialVersionUID = -252789556335033400L;
-    private String value;
+  private final String value;
     public TradeRunTimeModeLiteral(String value) {
         this.value = value;
     }

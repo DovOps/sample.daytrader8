@@ -39,9 +39,9 @@ import com.ibm.websphere.samples.daytrader.web.websocket.JsonMessage;
 @ServerEndpoint(value = "/pingWebSocketJson",encoders=JsonEncoder.class ,decoders=JsonDecoder.class)
 public class PingWebSocketJson {
 
-    private Session currentSession = null;
-    private Integer sentHitCount = null;
-    private Integer receivedHitCount = null;
+    private Session currentSession;
+    private Integer sentHitCount;
+    private Integer receivedHitCount;
        
     @OnOpen
     public void onOpen(final Session session, EndpointConfig ec) {

@@ -33,7 +33,7 @@ import javax.websocket.server.ServerEndpoint;
 @ServerEndpoint(value = "/pingBinary")
 public class PingWebSocketBinary {
 
-    private Session currentSession = null;
+    private Session currentSession;
    
     @OnOpen
     public void onOpen(final Session session, EndpointConfig ec) {

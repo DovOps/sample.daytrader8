@@ -27,9 +27,9 @@ import javax.naming.InitialContext;
 @PingInterceptorBinding
 public class PingCDIBean {
 
-  private static int helloHitCount = 0;
-  private static int getBeanManagerHitCountJNDI = 0;
-  private static int getBeanManagerHitCountSPI = 0;
+  private static int helloHitCount;
+  private static int getBeanManagerHitCountJNDI;
+  private static int getBeanManagerHitCountSPI;
 
 
   public int hello() {
@@ -39,7 +39,7 @@ public class PingCDIBean {
   public int getBeanMangerViaJNDI() throws Exception {
     BeanManager beanManager = (BeanManager) new InitialContext().lookup("java:comp/BeanManager");
     Set<Bean<?>> beans = beanManager.getBeans(Object.class);
-    if (beans.size() > 0) {
+    if (!beans.isEmpty()) {
       return ++getBeanManagerHitCountJNDI;
     }
     return 0;
@@ -50,7 +50,7 @@ public class PingCDIBean {
     BeanManager beanManager = CDI.current().getBeanManager();
     Set<Bean<?>> beans = beanManager.getBeans(Object.class);
 
-    if (beans.size() > 0) {
+    if (!beans.isEmpty()) {
       return ++getBeanManagerHitCountSPI;
     }
     return 0;

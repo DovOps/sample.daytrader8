@@ -65,9 +65,9 @@ public class PingServlet31AsyncRead extends HttpServlet {
     }
 
     class ReadListenerImpl implements ReadListener {
-        private ServletInputStream input = null;
-        private HttpServletResponse res = null;
-        private AsyncContext ac = null;
+        private ServletInputStream input;
+        private HttpServletResponse res;
+        private AsyncContext ac;
         private StringBuilder sb = new StringBuilder();
 
         ReadListenerImpl(ServletInputStream in, HttpServletResponse r, AsyncContext c) {
@@ -79,7 +79,7 @@ public class PingServlet31AsyncRead extends HttpServlet {
         public void onDataAvailable() throws IOException {
             
             int len = -1;
-            byte b[] = new byte[1024];
+            byte[] b = new byte[1024];
             
             while (input.isReady() && (len = input.read(b)) != -1) {
                 String data = new String(b, 0, len);

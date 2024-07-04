@@ -39,7 +39,7 @@ import com.ibm.websphere.samples.daytrader.util.Log;
 public class PingServlet2PDF extends HttpServlet {
 
     private static final long serialVersionUID = -1321793174442755868L;
-    private static int hitCount = 0;
+    private static int hitCount;
     private static final int BUFFER_SIZE = 1024 * 8; // 8 KB
 
     /**

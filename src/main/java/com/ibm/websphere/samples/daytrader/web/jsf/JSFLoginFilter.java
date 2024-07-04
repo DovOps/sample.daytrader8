@@ -39,7 +39,7 @@ public class JSFLoginFilter implements Filter {
     /**
      * @see Filter#init(FilterConfig)
      */
-    private FilterConfig filterConfig = null;
+    private FilterConfig filterConfig;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

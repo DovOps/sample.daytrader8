@@ -26,8 +26,8 @@ import javax.validation.constraints.PastOrPresent;
 
 public class SimpleBean2 extends SimpleBean1 {
 
-  private List<@PositiveOrZero Integer> numbers= new ArrayList<Integer>();
-  private List<@NotBlank String> strings = new ArrayList<String>();
+  private final List<@PositiveOrZero Integer> numbers = new ArrayList<>();
+  private final List<@NotBlank String> strings = new ArrayList<>();
     
   @PastOrPresent 
   LocalDateTime now = LocalDateTime.now();

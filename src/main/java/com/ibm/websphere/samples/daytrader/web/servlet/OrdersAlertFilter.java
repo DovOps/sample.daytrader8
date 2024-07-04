@@ -53,7 +53,7 @@ public class OrdersAlertFilter implements Filter {
   /**
    * @see Filter#init(FilterConfig)
    */
-  private FilterConfig filterConfig = null;
+  private FilterConfig filterConfig;
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
@@ -69,15 +69,15 @@ public class OrdersAlertFilter implements Filter {
       return;
     }
 
-    if (TradeConfig.getDisplayOrderAlerts() == true) {
+    if (TradeConfig.getDisplayOrderAlerts()) {
 
       try {
         String action = req.getParameter("action");
         if (action != null) {
           action = action.trim();
-          if ((action.length() > 0) && (!action.equals("logout"))) {
+          if ((action.length() > 0) && (!"logout".equals(action))) {
             String userID;
-            if (action.equals("login")) {
+            if ("login".equals(action)) {
               userID = req.getParameter("uid");
             } else {
               userID = (String) ((HttpServletRequest) req).getSession().getAttribute("uidBean");
@@ -86,7 +86,7 @@ public class OrdersAlertFilter implements Filter {
             if ((userID != null) && (userID.trim().length() > 0)) {
 
               Collection<?> closedOrders = tradeAction.getClosedOrders(userID);
-              if ((closedOrders != null) && (closedOrders.size() > 0)) {
+              if ((closedOrders != null) && (!closedOrders.isEmpty())) {
                 req.setAttribute("closedOrders", closedOrders);
               }
               if (Log.doTrace()) {

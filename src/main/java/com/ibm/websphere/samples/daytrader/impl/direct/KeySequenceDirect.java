@@ -28,7 +28,7 @@ import com.ibm.websphere.samples.daytrader.util.TradeConfig;
 
 public class KeySequenceDirect {
 
-    private static HashMap<String, Collection<?>> keyMap = new HashMap<String, Collection<?>>();
+  private static final HashMap<String, Collection<?>> keyMap = new HashMap<>();
 
     public static synchronized Integer getNextID(Connection conn, String keyName, boolean inSession, boolean inGlobalTxn) throws Exception {
         Integer nextID = null;
@@ -36,13 +36,13 @@ public class KeySequenceDirect {
         // for this key name
         // Then verify the allocated block has not been depleted
         // allocate a new block if necessary
-        if (keyMap.containsKey(keyName) == false) {
+        if (!keyMap.containsKey(keyName)) {
             allocNewBlock(conn, keyName, inSession, inGlobalTxn);
         }
         Collection<?> block = keyMap.get(keyName);
 
         Iterator<?> ids = block.iterator();
-        if (ids.hasNext() == false) {
+        if (!ids.hasNext()) {
             ids = allocNewBlock(conn, keyName, inSession, inGlobalTxn).iterator();
         }
         // get and return a new unique key
@@ -57,7 +57,7 @@ public class KeySequenceDirect {
     private static Collection<?> allocNewBlock(Connection conn, String keyName, boolean inSession, boolean inGlobalTxn) throws Exception {
         try {
 
-            if (inGlobalTxn == false && !inSession) {
+            if (!inGlobalTxn && !inSession) {
                 conn.commit(); // commit any pending txns
             }
 
@@ -93,7 +93,7 @@ public class KeySequenceDirect {
             Collection<?> block = new KeyBlock(keyVal, keyVal + TradeConfig.KEYBLOCKSIZE - 1);
             keyMap.put(keyName, block);
 
-            if (inGlobalTxn == false && !inSession) {
+            if (!inGlobalTxn && !inSession) {
                 conn.commit();
             }
 

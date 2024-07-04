@@ -69,10 +69,10 @@ public class PingServlet31Async extends HttpServlet {
     }
 
     class ReadListenerImpl implements ReadListener {
-        private ServletInputStream input = null;
-        private HttpServletResponse res = null;
-        private AsyncContext ac = null;
-        private Queue<String> queue = new LinkedBlockingQueue<String>();
+        private ServletInputStream input;
+        private HttpServletResponse res;
+        private AsyncContext ac;
+        private Queue<String> queue = new LinkedBlockingQueue<>();
 
         ReadListenerImpl(ServletInputStream in, HttpServletResponse r, AsyncContext c) {
             input = in;
@@ -83,7 +83,7 @@ public class PingServlet31Async extends HttpServlet {
         public void onDataAvailable() throws IOException {
             StringBuilder sb = new StringBuilder();
             int len = -1;
-            byte b[] = new byte[1024];
+            byte[] b = new byte[1024];
             
             while (input.isReady() && (len = input.read(b)) != -1) {
                 String data = new String(b, 0, len);
@@ -106,9 +106,9 @@ public class PingServlet31Async extends HttpServlet {
     }
     
     class WriteListenerImpl implements WriteListener {
-        private ServletOutputStream output = null;
-        private Queue<String> queue = null;
-        private AsyncContext ac = null;
+        private ServletOutputStream output;
+        private Queue<String> queue;
+        private AsyncContext ac;
 
         WriteListenerImpl(ServletOutputStream sos, Queue<String> q, AsyncContext c) {
             output = sos;
